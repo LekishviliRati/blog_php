@@ -7,8 +7,8 @@
 </head>
 
 <body>
-<h1>Mon super blog !</h1>
-<p>Derniers billets du blog :</p>
+<h1>My blog</h1>
+<p>Last posts</p>
 
 <?php
 // Connect to Data Base
