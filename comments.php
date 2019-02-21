@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Comments</title>
+        <title>Blog Post_Page</title>
     </head>
         <style>
             form
@@ -12,11 +12,10 @@
         </style>
     <body>
 
-        <h1>My blog </h1>
+        <h1>Blog Post_Page</h1>
         <p><a href="index.php">Back to posts</a></p>
 
         <?php
-        var_dump($_POST, $_GET);
         // Connect to Data Base
         try
         {
@@ -35,14 +34,12 @@
 
         <div class="news">
             <h3>
-                <?php echo htmlspecialchars($data['title']); ?>
-                <em>le <?php echo $data['creation_date_fr']; ?></em>
+                <?= htmlspecialchars($data['title']); ?>
+                <em>le <?= $data['creation_date_fr']; ?></em>
             </h3>
 
             <p>
-                <?php
-                echo nl2br(htmlspecialchars($data['content']));
-                ?>
+                <?= nl2br(htmlspecialchars($data['content']));?>
             </p>
         </div>
 
@@ -68,8 +65,8 @@
             while ($data = $req->fetch())
             {
                 ?>
-                <p><strong><?php echo htmlspecialchars($data['author']); ?></strong> le <?php echo $data['creation_date_fr']; ?></p>
-                <p><?php echo nl2br(htmlspecialchars($data['content'])); ?></p>
+                <p><strong><?= htmlspecialchars($data['author']); ?></strong> le <?= $data['creation_date_fr']; ?></p>
+                <p><?= nl2br(htmlspecialchars($data['content'])); ?></p>
                 <?php
 
         } // End of comments loop
@@ -82,7 +79,7 @@
                 <p>
                     <label for="author">Pseudo</label> : <input type="text" name="author" id="author" /><br />
                     <label for="content">Message</label> :  <input type="content" name="content" id="content" /><br />
-                    <input type="hidden" name="post_id" value="<?php echo $_GET['post']?>"/>
+                    <input type="hidden" name="post_id" value="<?= $_GET['post']?>"/>
 
                     <input type="submit" value="Submit" />
                 </p>

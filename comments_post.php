@@ -10,9 +10,9 @@ catch(Exception $e)
 }
 
 // Insert message with prepared request
-$req = $db->prepare('INSERT INTO comment(author, content, post_id) VALUES(?, ?, ?)');
+$req = $db->prepare('INSERT INTO comment(author, content, post_id, creation_date) VALUES(?, ?, ?, NOW())');
 $req->execute(array($_POST['author'], $_POST['content'], $_POST['post_id']));
 
 // Visitor redirection to comments
-header('Location: comments.php');
+header('Location: comments.php?post='.$_POST['post_id']);
 ?>

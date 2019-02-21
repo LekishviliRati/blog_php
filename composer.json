@@ -1,0 +1,7 @@
+{
+    "require": {
+        "twig/twig": "^2.6",
+        "ramsey/uuid": "^3.8",
+        "friendsofphp/php-cs-fixer": "^2.14"
+    }
+}

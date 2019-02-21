@@ -7,8 +7,7 @@
 </head>
 
 <body>
-<h1>My blog</h1>
-<p>Last posts</p>
+<h1>Blog Posts_List</h1>
 
 <?php
 // Connect to Data Base
@@ -29,17 +28,15 @@ while ($data = $req->fetch())
     ?>
     <div class="news">
         <h3>
-            <?php echo htmlspecialchars($data['title']); ?>
-            <em>le <?php echo $data['creation_date_fr']; ?></em>
+            <?= htmlspecialchars($data['title']); ?>
+            <em>le <?= $data['creation_date_fr']; ?></em>
         </h3>
 
         <p>
-            <?php
-            // Display post content
-            echo nl2br(htmlspecialchars($data['content']));
-            ?>
+            <!--Display post content-->
+            <?= nl2br(htmlspecialchars($data['content'])); ?>
             <br />
-            <em><a href="comments.php?post=<?php echo $data['id']; ?>">Comments</a></em>
+            <em><a href="comments.php?post=<?= $data['id']; ?>">Comments</a></em>
         </p>
     </div>
     <?php
