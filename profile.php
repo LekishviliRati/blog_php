@@ -41,7 +41,8 @@ catch (Exception $e) {
             <a href="add_post.php">Add post </a>
             <br/>
             <a href="posts_list_admin.php">See my posts </a>
-
+            <br/>
+            <a href="comments_admin.php">See comments </a>
     </div>
     </body>
     </html>

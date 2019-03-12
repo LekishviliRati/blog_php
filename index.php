@@ -7,6 +7,7 @@
 </head>
 
 <body>
+
 <h1>Blog Posts_List</h1>
 
 <?php
@@ -21,13 +22,13 @@ catch(Exception $e)
 }
 
 // Display last 5 posts
-$req = $db->query('SELECT id, title, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr FROM post ORDER BY creation_date DESC LIMIT 0, 5');
-
+$req = $db->query('SELECT id, title, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, user_id FROM post ORDER BY creation_date DESC LIMIT 0, 5');
 while ($data = $req->fetch())
 {
     ?>
     <div class="news">
         <h3>
+            <?= htmlspecialchars($data['user_id']); ?>
             <?= htmlspecialchars($data['title']); ?>
             <em>le <?= $data['creation_date_fr']; ?></em>
         </h3>
@@ -36,7 +37,7 @@ while ($data = $req->fetch())
             <!--Display post content-->
             <?= nl2br(htmlspecialchars($data['content'])); ?>
             <br />
-            <em><a href="comments.php?post=<?= $data['id']; ?>">Comments</a></em>
+            <em><a href="comments.php?post=<?= $data['id']; ?>">See this post</a></em>
         </p>
     </div>
     <?php

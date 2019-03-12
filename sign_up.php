@@ -15,8 +15,8 @@ if(isset($_POST['sign_up_form']))
 { //secure with variables
     $pseudo = htmlspecialchars($_POST['pseudo']);
     $mail = htmlspecialchars($_POST['mail']);
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $password2 = password_hash($_POST['password2'], PASSWORD_DEFAULT);
+    $password = htmlspecialchars($_POST['password']);
+    $password2 = htmlspecialchars($_POST['password2']);
 
     if(!empty($_POST['pseudo']) AND ($_POST['mail']) AND ($_POST['password']) AND ($_POST['password2']))
     {
@@ -32,9 +32,20 @@ if(isset($_POST['sign_up_form']))
                 {
                     if($password == $password2)
                     {
+                        //temporary with sha1, because can't use password_verify();
+                        //$hash_password = sha1($_POST['password']);
+                        //$hash_password2 = sha1($_POST['password2']);
+                        //$insert_user = $db->prepare("INSERT INTO user(pseudo, mail, password, registration_date) VALUES(?, ?, ?, NOW())");
+                        //$insert_user->execute(array($pseudo, $mail, $hash_password));
+                        //$message ="Your account was succesfully registered <a href=\"sign_in.php\"> Log In<a/>";
+
+                        // Need use of password_verify ();
+                        $hash_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                        $hash_password2 = password_hash($_POST['password2'], PASSWORD_DEFAULT);
                         $insert_user = $db->prepare("INSERT INTO user(pseudo, mail, password, registration_date) VALUES(?, ?, ?, NOW())");
-                        $insert_user->execute(array($pseudo, $mail, $password));
+                        $insert_user->execute(array($pseudo, $mail, $hash_password));
                         $message ="Your account was succesfully registered <a href=\"sign_in.php\"> Log In<a/>";
+                        // Need use of password_verify
                     }
                     else
                     {
@@ -53,7 +64,7 @@ if(isset($_POST['sign_up_form']))
         }
         else
         {
-            $message = "max 255 characters for pseudo";
+            $message = "max 255 minimum 2 characters for pseudo";
         }
     }
     else
