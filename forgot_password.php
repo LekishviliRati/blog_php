@@ -145,12 +145,12 @@ if (isset($_POST['change_password_submit'])) {
             $pswc = htmlspecialchars($_POST['change_password_confirmation']);
             if (!empty($psw) AND !empty($pswc)) {
                 if ($psw == $pswc) {
-                    $psw = sha1($psw);
+                    $psw = password_hash($psw, PASSWORD_DEFAULT);
                     $ins_psw = $db->prepare("UPDATE user SET password = ? WHERE mail = ?");
                     if ($ins_psw->execute(array($psw, $_SESSION['retrieve_mail']))) {
                         $del_req = $db->prepare('DELETE FROM retrieval WHERE mail = ?');
                         $del_req->execute(array($_SESSION['retrieve_mail']));
-                        header('Location:http://localhost:8888/blogphp/sign_in.php');
+                        $message ="You have a new password ! you can connect now. Clic on Back to Sign In" ;
                     } else {
                         $message = "req invalid";
                     }

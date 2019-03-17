@@ -6,6 +6,7 @@
 
 <body>
 
+<p><a href="sign_in.php"> Back to Sign In</a></p>
 <p> FORGOT YOUR PASSWORD ? </p> <br />
 
 <?php if ($section == 'code') { ?>

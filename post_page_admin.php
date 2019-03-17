@@ -2,19 +2,6 @@
 session_start();
 $user_id = $_SESSION['id'];
 
-?>
-
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title>single post ADMIN</title>
-</head>
-
-<body>
-
-<h1>Blog Post_Page</h1>
-<p><a href="posts_list_admin.php">Back to posts</a></p>
-<?php
 
 if(isset($user_id)){
 
@@ -27,84 +14,46 @@ if(isset($user_id)){
         die('Erreur : ' . $e->getMessage());
     }
 
+
     // Get post
     if (is_numeric($_GET['post'])) {
-
-
+        $posts = [];
         $req = $db->prepare('SELECT id, title, standfirst, content, update_date, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr FROM post WHERE id = ?');
         $req->execute(array($_GET['post']));
-        $data = $req->fetch();
-        if (is_array($data)) {
+        $Data = $req->fetch();
 
-            ?>
+        if (is_array($Data)) {
 
-            <div class="news">
-                <h3>
-                    <?= htmlspecialchars($data['title']); ?>
-                    <br/>
-                    <?= $data['standfirst']; ?>
-                    <br/><br/>
-                    creation date: <?= $data['creation_date_fr']; ?>
-                    <br/><br/>
-                    <?php
-                    // If no updatefor a post, don't display the update by default "0000-00-00 00:00:00"
-                    if ($data['update_date'] != 0){
-                        echo "update : " . ($data['update_date']);
-                    }
+            $posts[] = $Data;
 
-                    ?>
-
-                </h3>
-
-                <p>
-                    <?= nl2br(htmlspecialchars($data['content']));
-                    ?>
-                </p>
-            </div>
-
-            <br/>
-            <a href="edit_post.php?post=<?= $data['id']; ?>">Edit my post</a>
-            <br/>
-
-            <br/>
-            <a href="delete_post.php?post=<?= $data['id']; ?>">Delete my post</a>
-            <br/>
-
-            <?php
-            $req->closeCursor(); // Free Fetch();
-
-            // Get comments
-            $req = $db->prepare('SELECT author, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr FROM comment WHERE post_id = ?');
-            $req->execute(array($_GET['post']));
-            while ($data = $req->fetch()) {
-                ?>
-                <p><strong><?= htmlspecialchars($data['author']); ?></strong>
-                    creation date <?= $data['creation_date_fr']; ?></p>
-                <p><?= nl2br(htmlspecialchars($data['content'])); ?></p>
-                <?php
-
-            } // End of comments loop
-            $req->closeCursor();
         } else {
             echo "identifiant du post inexistant";
-        }
+            }
 
-        var_dump(is_numeric($_GET['post']));
     } else{
         echo "Valeur différent de entier";
         }
 
-?>
+        $req->closeCursor(); // Free Fetch();
 
-</body>
-</html>
+        // Get comments
+        $comments = [];
+        $req = $db->prepare('SELECT author, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr FROM comment WHERE post_id = ?');
+        $req->execute(array($_GET['post']));
+        while ($data = $req->fetch()) {
+
+            $comments[] = $data;
+        }
+            $req->closeCursor();
 
 
-<?php // mask all content of the page to visitors because it's dedicated to connected users
+ // mask all content of the page to visitors because it's dedicated to connected users
 } else {
-    echo "Access Denied ! ";
+    //echo "Access Denied ! ";
+    header('Location: sign_in.php');
     ?>
     <a href="sign_in.php" > Log In !</a>
     <?php
 }
-?>
+
+require_once ('post_page_admin_view.php');
