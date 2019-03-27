@@ -2,16 +2,12 @@
 session_start();
 $user_id = $_SESSION['id'];
 
+require('model/frontend.php');
+
 // check with 'id'if user is connected or not.
 if (isset($user_id)){
 
-//Connect to DB
-    try {
-        $db = new PDO('mysql:host=localhost;dbname=blogphp;charset=utf8', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING));
-
-    } catch (Exception $e) {
-        die('Erreur : ' . $e->getMessage());
-    }
+    $db = dbConnect();
 
     //Display connected user's posts
     $req_user = $db->prepare("SELECT * FROM post WHERE id=?");
@@ -45,13 +41,11 @@ if (isset($user_id)){
         header('Location: post_page_admin.php?post='.$_GET['post']);
     }
 
-
-    require_once ('edit_post_view.php');
-// mask all content of the page to visitors because it's dedicated to connected users
 } else {
     echo "Access Denied ! ";
     ?>
     <a href="sign_in.php" > Log In !</a>
     <?php
 }
-?>
+
+require_once('view/edit_post_view.php');

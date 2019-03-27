@@ -2,13 +2,11 @@
 session_start();
 $user_id = $_SESSION['id'];
 
+require('model/frontend.php');
+
 if (isset($user_id)) {
-//Connect to DB
-    try {
-        $db = new PDO('mysql:host=localhost;dbname=blogphp;charset=utf8', 'root', 'root');
-    } catch (Exception $e) {
-        die('Erreur : ' . $e->getMessage());
-    }
+
+        $db = dbConnect();
 
         //Get posts list
         $posts = [];
@@ -19,13 +17,13 @@ if (isset($user_id)) {
         }
     $req->closeCursor();
 
-    // mask all content of the page to visitors because it's dedicated to connected users
+
     } else {
         echo "Access Denied ! "; ?>
         <a href="sign_in.php" > Log In !</a>
         <?php
     }
 
-require_once ('posts_super_user_view.php');
+require_once('view/posts_super_user_view.php');
 
 

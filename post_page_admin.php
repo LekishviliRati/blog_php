@@ -14,7 +14,6 @@ if(isset($user_id)){
         die('Erreur : ' . $e->getMessage());
     }
 
-
     // Get post
     if (is_numeric($_GET['post'])) {
         $posts = [];
@@ -27,11 +26,11 @@ if(isset($user_id)){
             $posts[] = $Data;
 
         } else {
-            echo "identifiant du post inexistant";
+            echo "POst does not exist";
             }
 
     } else{
-        echo "Valeur différent de entier";
+        echo "Value not int";
         }
 
         $req->closeCursor(); // Free Fetch();
@@ -46,14 +45,11 @@ if(isset($user_id)){
         }
             $req->closeCursor();
 
-
- // mask all content of the page to visitors because it's dedicated to connected users
 } else {
-    //echo "Access Denied ! ";
-    header('Location: sign_in.php');
+    echo "Access Denied ! ";
     ?>
     <a href="sign_in.php" > Log In !</a>
     <?php
 }
 
-require_once ('post_page_admin_view.php');
+require_once('view/post_page_admin_view.php');

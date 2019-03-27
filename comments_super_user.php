@@ -2,14 +2,12 @@
 session_start();
 $user_id = $_SESSION['id'];
 
+require('model/frontend.php');
+
 if (isset($user_id) == 14) {
 
 //Connect to DB
-    try {
-        $db = new PDO('mysql:host=localhost;dbname=blogphp;charset=utf8', 'root', 'root');
-    } catch (Exception $e) {
-        die('Erreur : ' . $e->getMessage());
-    }
+    $db = dbConnect();
 
     //Get comments list
     $posts = [];
@@ -28,6 +26,6 @@ if (isset($user_id) == 14) {
         <?php
     }
 
-require_once ('comments_super_user_view.php');
+require_once('view/comments_super_user_view.php');
 
 

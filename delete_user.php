@@ -2,17 +2,12 @@
 session_start();
 $user_id = $_SESSION['id'];
 
+require('model/frontend.php');
+
 if (isset($user_id) == 14){
 
-    //Connect to DB
-    try
-    {
-        $db = new PDO('mysql:host=localhost;dbname=blogphp;charset=utf8', 'root', 'root');
-    }
-    catch(Exception $e)
-    {
-        die('Erreur : '.$e->getMessage());
-    }
+    $db = dbConnect();
+
     //If user clic on button "delete post"
     if(isset($_POST['delete_user'])) {
         //super user delete 1 user
@@ -36,38 +31,12 @@ if (isset($user_id) == 14){
             echo "Impossible to delete this user";
         }
     }
-    ?>
 
-    <html>
-    <head>
-        <title> Add posts</title>
-        <meta charset="utf-8">
-    </head>
-
-    <body>
-
-    <div align="left">
-        <h2>Please confirm to delete this post </h2>
-        <form method="POST" action="">
-            <table>
-                <tr>
-                    <td align="right"><br />
-                        <input type="submit" name="delete_user" value="Delete this post !">
-                    </td>
-                </tr>
-            </table>
-        </form>
-        <?php if(isset($message)){echo $message;} ?>
-    </div>
-
-    </body>
-    </html>
-
-    <?php // mask all content of the page to visitors because it's dedicated to connected users
 } else {
     echo "Access Denied ! ";
     ?>
     <a href="sign_in.php" > Log In !</a>
     <?php
 }
-?>
+
+require_once ('view/delete_user_view.php');

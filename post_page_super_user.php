@@ -45,7 +45,6 @@ if(isset($user_id)){
     } // End of comments loop
     $req->closeCursor();
 
-// mask all content of the page to visitors because it's dedicated to connected users
 } else {
     echo "Access Denied ! ";
     ?>
@@ -53,4 +52,4 @@ if(isset($user_id)){
     <?php
 }
 
-require_once ('post_page_super_user_view.php');
+require_once('view/post_page_super_user_view.php');

@@ -1,15 +1,8 @@
-
 <?php
-// Connect to Data Base
-try
-{
-    $db = new PDO('mysql:host=localhost;dbname=blogphp;charset=utf8', 'root', 'root');
-}
-catch(Exception $e)
-{
-    die('Erreur : '.$e->getMessage());
-}
 
+require('model/frontend.php');
+
+$db = dbConnect();
 
 // Get post
 $posts = [];
@@ -33,4 +26,4 @@ while ($data = $req->fetch()) {
 
 $req->closeCursor();
 
-require_once ('comments_view.php');
+require_once('view/article_page_view.php');

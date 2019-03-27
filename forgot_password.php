@@ -5,16 +5,12 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 require 'vendor/autoload.php';
 
-//Connect to DB
-try {
-    $db = new PDO('mysql:host=localhost;dbname=blogphp;charset=utf8', 'root', 'root');
-} catch (Exception $e) {
-    die('Erreur : ' . $e->getMessage());
-}
+require('model/frontend.php');
+$db = dbConnect();
 
 if (isset($_GET['section'])) {
     $section = htmlspecialchars($_GET['section']);
-} else{
+} else {
     $section = "";
 }
 
@@ -107,7 +103,6 @@ if(isset($_POST['retrieve_submit'],$_POST['retrieve_mail'])) {
     }
 
 }
-// FORM submit : retrieve_mail
 
 
 // FORM submit : check_submit
@@ -128,7 +123,6 @@ if (isset($_POST['check_submit'],$_POST['check_code'])){
         $message = "Please enter your code to reset you received by mail";
     }
 }
-// FORM submit : check_submit
 
 
 // FORM submit : change_password_submit
@@ -168,6 +162,5 @@ if (isset($_POST['change_password_submit'])) {
 
     }
 }
-// FORM submit : change_password_submit
 
-    require_once ('forgot_password_view.php');
+    require_once('view/forgot_password_view.php');

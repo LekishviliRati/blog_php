@@ -22,7 +22,6 @@
                     Post id :  <?= htmlspecialchars($data['post_id']); ?>
                 <p>
                     Status :
-
                     <?php if ($data['status'] == 0) {
 
                         echo "Non published";
@@ -38,7 +37,7 @@
                     <em>le <?= $data['creation_date_fr']; ?></em>
                     <br/>
 
-                <form method="POST" action="delete_comment_super_user.php">
+                <form method="POST" action="../delete_comment_super_user.php">
                     <input type="submit" name="delete_comment" value="Delete this comment">
                     <input type="hidden" name="comment_id" value="<?= $data['id'] ?>"/>
                 </form>

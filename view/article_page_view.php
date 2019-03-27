@@ -13,7 +13,7 @@
 <body>
 
 <h1>Blog Post_Page</h1>
-<p><a href="index.php">Back to posts</a></p>
+<p><a href="articles.php">Back to posts</a></p>
 
 
 <div class="news">

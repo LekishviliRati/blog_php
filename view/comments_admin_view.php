@@ -9,7 +9,6 @@
 
         <?php foreach ($posts as $data): ?>
 
-        <h3>comment ID : <?= htmlspecialchars($data['id']); ?> </h3>
         <h3>Auteur : <?= htmlspecialchars($data['author']); ?></h3>
         <p>Post id :  <?= htmlspecialchars($data['post_id']); ?><p>
             <p>Status :

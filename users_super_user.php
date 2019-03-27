@@ -1,15 +1,13 @@
 <?php
 session_start();
 $user_id = $_SESSION['id'];
-//Connect to DB
-try {
-    $db = new PDO('mysql:host=localhost;dbname=blogphp;charset=utf8', 'root', 'root');
-} catch (Exception $e) {
-    die('Erreur : ' . $e->getMessage());
-}
+
+require('model/frontend.php');
+
 
 if (isset($user_id) == 14) {
 
+    $db = dbConnect();
     //Get users
     $posts = [];
     $req = $db->query('SELECT id, pseudo, mail, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%imin%ss\') AS registration_date_fr FROM user ORDER BY registration_date DESC ');
@@ -26,6 +24,6 @@ if (isset($user_id) == 14) {
     <?php
 }
 
-require_once ('users_super_user_view.php');
+require_once('view/users_super_user_view.php');
 
 

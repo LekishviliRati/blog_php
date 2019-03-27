@@ -1,18 +1,12 @@
 <?php
 
-//Connect to DB
-try
-{
-    $db = new PDO('mysql:host=localhost;dbname=blogphp;charset=utf8', 'root', 'root');
-}
-catch(Exception $e)
-{
-    die('Erreur : '.$e->getMessage());
-}
+require('model/frontend.php');
+
+$db = dbConnect();
 
 if(isset($_POST['sign_up_form']))
 
-{ //secure with variables
+{
     $pseudo = htmlspecialchars($_POST['pseudo']);
     $mail = htmlspecialchars($_POST['mail']);
     $password = htmlspecialchars($_POST['password']);
@@ -32,20 +26,11 @@ if(isset($_POST['sign_up_form']))
                 {
                     if($password == $password2)
                     {
-                        //temporary with sha1, because can't use password_verify();
-                        //$hash_password = sha1($_POST['password']);
-                        //$hash_password2 = sha1($_POST['password2']);
-                        //$insert_user = $db->prepare("INSERT INTO user(pseudo, mail, password, registration_date) VALUES(?, ?, ?, NOW())");
-                        //$insert_user->execute(array($pseudo, $mail, $hash_password));
-                        //$message ="Your account was succesfully registered <a href=\"sign_in.php\"> Log In<a/>";
-
-                        // Need use of password_verify ();
                         $hash_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
                         $hash_password2 = password_hash($_POST['password2'], PASSWORD_DEFAULT);
                         $insert_user = $db->prepare("INSERT INTO user(pseudo, mail, password, registration_date) VALUES(?, ?, ?, NOW())");
                         $insert_user->execute(array($pseudo, $mail, $hash_password));
                         $message ="Your account was succesfully registered <a href=\"sign_in.php\"> Log In<a/>";
-                        // Need use of password_verify
                     }
                     else
                     {
@@ -74,4 +59,4 @@ if(isset($_POST['sign_up_form']))
 
 }
 
-require_once ('sign_up_view.php');
+require_once('view/sign_up_view.php');

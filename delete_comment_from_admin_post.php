@@ -1,10 +1,9 @@
 <?php
 session_start();
 $user_id = $_SESSION['id'];
-
 require('model/frontend.php');
 
-if (isset($user_id) == 14) {
+if (isset($user_id)) {
 
     $db = dbConnect();
 
@@ -13,7 +12,7 @@ if (isset($user_id) == 14) {
         $delete_comment->execute(array($_POST['comment_id']));
     }
 
-    header("Location: comments_super_user.php");
+    header("Location: post_page_admin.php");
 
 
 } else {

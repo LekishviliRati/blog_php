@@ -7,6 +7,9 @@ use PHPMailer\PHPMailer\Exception;
 if (isset($_POST['submit_comment'])){
 //Load Composer's autoloader
     require 'vendor/autoload.php';
+    require('model/frontend.php');
+
+    $db = dbConnect();
 
     $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
     try {
@@ -46,20 +49,11 @@ if (isset($_POST['submit_comment'])){
     }
 }
 
-// Add Comment
-// Connect to Data Base
-try
-{
-    $db = new PDO('mysql:host=localhost;dbname=blogphp;charset=utf8', 'root', 'root');
-}
-catch(Exception $e)
-{
-    die('Erreur : '.$e->getMessage());
-}
+
 
 // ADD COMMENT TO DATABASE
 $req = $db->prepare('INSERT INTO comment(author, user_id, content, post_id, creation_date) VALUES(?, ?, ?, ?, NOW())');
 $req->execute(array($_POST['author'], $_POST['user_id'], $_POST['content'], $_POST['post_id']));
 
 // Visitor redirection to comments
-header('Location: comments.php?post='.$_POST['post_id']);
+header('Location: article_page.php?post='.$_POST['post_id']);
