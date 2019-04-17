@@ -1,5 +1,4 @@
 
-
 <html>
 <head>
     <meta charset="utf-8" />
@@ -12,8 +11,13 @@
 <h1> Posts_List</h1>
 
 <a href="homepage.php"> Home Page </a>
+<pre></pre>
+
+
 
     <?php foreach ($posts as $data): ?>
+
+
     <div class="news">
         <h3>
             <?= htmlspecialchars($data['title']); ?> <br />

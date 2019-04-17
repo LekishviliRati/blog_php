@@ -1,19 +1,29 @@
 <?php
 
-var_dump($_GET);
+/*spl_autoload_register('example');
 
-$url = '';
-if(isset($_GET['url'])) {
-    $url = explode('/', $_GET['url']);
+function example($classname)
+{
+    require "../model/" . $classname . ".php";
 }
 
-var_dump($url);
+$toto = new SystemPrenom();
+$couou = new Coucou();
 
-if($url == '') {
-    require '../homepage.php';
+die();*/
 
-}   elseif ($url[0] == 'sign_in.php') {
-    require '../sign_in.php';
-}
+require "../controller/homePage.php";
+require "../controller/contact.php";
+require "../controller/articles.php";
+require "../controller/signIn.php";
 
-#require_once ('../homepage.php');
+
+require "../services/url/url.php";
+require "../services/router/router.php";
+require "../services/execute_controller/execute_controller.php";
+
+
+
+$url = recupUrl();
+$controller_name = identifyController($url);
+executeController($controller_name);

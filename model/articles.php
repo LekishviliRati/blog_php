@@ -1,7 +1,9 @@
 <?php
 
-require('model/frontend.php');
+require "backend.php"; #for function dbConnect
 
+function getArticles()
+{
     $db = dbConnect();
     // Display last 5 posts
     $posts = [];
@@ -10,7 +12,5 @@ require('model/frontend.php');
     {
         $posts[] = $data;
     }
-    $req->closeCursor();
-
-
-require_once('view/articles_view.php');
+    return $posts;
+}
